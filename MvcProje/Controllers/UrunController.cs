@@ -4,28 +4,21 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;    
 using Microsoft.Extensions.Logging;
+using MvcProje.Data;
 
 namespace MvcProje.Controllers
 {
     public class UrunController : Controller
     {
-        private readonly ILogger<UrunController> _logger;
 
-        public UrunController(ILogger<UrunController> logger)
+        private readonly AppDbContext _context;
+  
+        public UrunController(AppDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View("Error!");
-        }
     }
 }
