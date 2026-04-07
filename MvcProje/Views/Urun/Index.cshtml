@@ -1,0 +1,24 @@
+@model List<MvcProje.Models.Urun>
+ 
+<h2>Ürün Listesi</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ürün Adı</th>        
+            <th>Fiyat</th>        
+            <th>Kategori Adı</th>        
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var urun in Model)
+        {
+            <tr>  
+                <td>@urun.Ad</td>
+                <td>@urun.Fiyat</td>
+                <td>@urun.Kategori.Ad</td>
+            </tr>
+        }
+    </tbody>
+</table>

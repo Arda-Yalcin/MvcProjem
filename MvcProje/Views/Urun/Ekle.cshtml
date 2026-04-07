@@ -1,0 +1,26 @@
+@model MvcProje.Models.Urun
+
+<h2> Yeni Ürün EKle</h2>
+
+<form asp-action="Ekle" method="post">
+
+    <div class="form-group" style="margin-bottom:15px;">
+        <label class="form-label">Ürün Adı</label>
+        <input asp-for="Ad"  class="form-control" placeholder="Ürün Adı Giriniz" required />
+    </div>
+
+    <div class="form-group" style="margin-bottom:15px;">
+        <label class="form-label">Fiyat (₺)</label>
+        <input asp-for="Fiyat" type="number" step="0.01"  class="form-control" placeholder="Ürünün Fiyatını Giriniz" required />
+    </div>
+
+    <div class="form-group" style="margin-bottom:15px;">
+        <label class="form-label">Kategori</label>
+        <select asp-for="KategoriId" asp-items="ViewBag.KategoriListesi" class="form-control" required>
+            <option value="">--Lütfen Bir Kategori Seçin--</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+    <a asp-action="Index" class="btn btn-secondary" style="margin-left:10px;">İptal et ve Listeye dön</a>
+</form>
