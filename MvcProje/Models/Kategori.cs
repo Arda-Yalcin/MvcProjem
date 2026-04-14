@@ -9,6 +9,6 @@ namespace MvcProje.Models
     {
         public int Id { get; set; }
         public string  Ad { get; set; }
-        public List<Urun> Urunler {get; set;}
+        public List<Urun>? Urunler {get; set;}
     }
 }

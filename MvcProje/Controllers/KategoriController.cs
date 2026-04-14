@@ -12,71 +12,71 @@ using MvcProje.Models;
 
 namespace MvcProje.Controllers
 {
-    public class UrunController : Controller
+    public class KategoriController : Controller
     {
-
         private readonly AppDbContext _context;
   
-        public UrunController(AppDbContext context)
+        public KategoriController(AppDbContext context)
         {
             _context = context;
         }
 
+
         public IActionResult Index()
         {
-            // Ürünleri çekerken bağlı olduğu Kategoriyi de dahil ediyoruz(Include)
-            var urunler = _context.Urunler.Include(u => u.Kategori).ToList();
-            return View (urunler);
+            var kategoriler = _context.Kategoriler.ToList();
+            return View (kategoriler);
         }
 
         public IActionResult Ekle()
         {
-            //   Veritabanındaki kategorileri çekip dropdown için viewbag içine atıyoruz
-            //   "Id" arka planda kaydedilecek değer, "Ad" ise kullanıcıya gösterilecek metindir.
-
-            ViewBag.KategoriListesi=new SelectList(_context.Kategoriler,"Id","Ad");
             return View();
         }
+        
         [HttpPost]
-        public IActionResult Ekle(Urun urun)
+        public IActionResult Ekle(Kategori kategori)
         {
             //Model kurallarına uyuyorsa veri tabanına ekle
             if(ModelState.IsValid)
             {
-                _context.Urunler.Add(urun);
+                _context.Kategoriler.Add(kategori);
                 _context.SaveChanges();//Değişiklikleri Kaydet
                 return RedirectToAction("Index");//Kayıt sonrası liste sayfasına yönlendir
             }
             //eğer bir hata varsa formu hatalarla birlikte tekrar göster
             ViewBag.KategoriListesi=new SelectList(_context.Kategoriler,"Id","Ad");
-            return View(urun);
+            return View(kategori);
         }
-
-
+        [HttpGet]
         public IActionResult Sil(int? id)
         {
 
             if(id==null) return NotFound();
             //Silinecek ürünü ve kategorisini buluyoruz
-            var urun = _context.Urunler.Include(u => u.Kategori).FirstOrDefault(m => m.Id==id);
+            var kategori = _context.Kategoriler.FirstOrDefault(m => m.Id==id);
 
-            if(urun==null) return NotFound();
-            return View(urun);
+            if(kategori==null) return NotFound();
+            return View(kategori);
         }
-
-
 
         [HttpPost, ActionName("Sil")]
         [ValidateAntiForgeryToken]
         public IActionResult SilOnay(int id)
         {
-            var urun = _context.Urunler.Find(id);
-            if(urun != null)
+            bool bagliUrunVarmi= _context.Urunler.Any(u => u.KategoriId == id);
+            if (bagliUrunVarmi)
             {
-                _context.Urunler.Remove(urun);
+                TempData["HataMEsaji"]="Bu Kategori Silinemez! Çünkü Bu Kategorinin Içerisinde Hala Ürün Bulunmakta";
+                return RedirectToAction(nameof(Sil), new{id=id});
+            }
+            var kategori = _context.Kategoriler.Find(id);
+
+            if(kategori != null)
+            {
+                _context.Kategoriler.Remove(kategori);
                 _context.SaveChanges();
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index"); //nameof ile aynı anlama geliyor
         }
     }
 }

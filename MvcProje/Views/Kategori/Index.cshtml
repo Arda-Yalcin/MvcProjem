@@ -1,0 +1,25 @@
+@model List<MvcProje.Models.Kategori>
+
+<a asp-action="Ekle" type="button" class="btn btn-success">+Yeni Kategori Ekle</a>
+
+<table class="table">
+    <thead>
+        <tr>       
+            <th>Kategori Adı</th>
+            <th>Düzenle</th>   
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var kategori in Model)
+        {
+            <tr>  
+                <td>@kategori.Ad</td>
+                <td>
+                    <a asp-action="Sil" asp-route-id="@kategori.Id" type="button" class=" btn btn-outline-danger">Sil</a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>

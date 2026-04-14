@@ -3,9 +3,7 @@
 <h2>Ürün Listesi</h2>
 
 
-<button type="button" class="btn btn-success" data-bs-toggle="button" aria-pressed="false" autocomplete="off" >
-    +Yeni ürün ekle
-</button>
+<a asp-action="Ekle" type="button" class="btn btn-success">+Yeni Ürün Ekle</a>
 
 
 
@@ -16,7 +14,8 @@
         <tr>
             <th>Ürün Adı</th>        
             <th>Fiyat</th>        
-            <th>Kategori Adı</th>        
+            <th>Kategori Adı</th>     
+            <th>Düzenle</th>   
         </tr>
     </thead>
 
@@ -27,7 +26,12 @@
                 <td>@urun.Ad</td>
                 <td>@urun.Fiyat</td>
                 <td>@urun.Kategori.Ad</td>
+                <td>
+                    <a asp-action="Sil" asp-route-id="@urun.Id" type="button" class=" btn btn-outline-danger">Sil</a>
+                </td>
             </tr>
+
         }
     </tbody>
 </table>
+
