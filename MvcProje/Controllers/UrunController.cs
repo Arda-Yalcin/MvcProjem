@@ -29,14 +29,14 @@ namespace MvcProje.Controllers
             return View (urunler);
         }
 
-        public IActionResult Ekle()
-        {
-            //   Veritabanındaki kategorileri çekip dropdown için viewbag içine atıyoruz
-            //   "Id" arka planda kaydedilecek değer, "Ad" ise kullanıcıya gösterilecek metindir.
+            public IActionResult Ekle()
+            {
+                //   Veritabanındaki kategorileri çekip dropdown için viewbag içine atıyoruz
+                //   "Id" arka planda kaydedilecek değer, "Ad" ise kullanıcıya gösterilecek metindir.
 
-            ViewBag.KategoriListesi=new SelectList(_context.Kategoriler,"Id","Ad");
-            return View();
-        }
+                ViewBag.KategoriListesi=new SelectList(_context.Kategoriler,"Id","Ad");
+                return View();
+            }
         [HttpPost]
         public IActionResult Ekle(Urun urun)
         {
